@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MixApp</string>
+    <string name="movies">Movies</string>
+    <string name="roomdb">RoomDB</string>
+    <string name="otherapi">OtherApi</string>
+    <string name="search">Search</string>
+</resources>
