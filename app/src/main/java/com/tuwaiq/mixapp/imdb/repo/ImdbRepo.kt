@@ -1,15 +1,22 @@
 package com.tuwaiq.mixapp.imdb.repo
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.tuwaiq.mixapp.imdb.api.ImdbApi
 import com.tuwaiq.mixapp.imdb.models.Movie
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Query
+import java.util.concurrent.Flow
 
 private const val TAG = "ImdbRepo"
-class ImdbRepo {
+open class ImdbRepo {
 
     private val retrofit:Retrofit = Retrofit.Builder()
         .baseUrl("https://www.imdb-api.com/")
@@ -18,6 +25,21 @@ class ImdbRepo {
 
     private val imdbApi:ImdbApi = retrofit.create(ImdbApi::class.java)
 
+
+    val getMovie:kotlinx.coroutines.flow.Flow<List<Movie>> = flow {
+
+
+
+            val response = imdbApi.getTop250movies()
+            if (response.isSuccessful){
+                Log.e(TAG , "the ${response.raw()}")
+                response.body()?.movies?.let { emit(it) }
+            }else{
+                Log.e(TAG , "the error ${response.errorBody()}")
+            }
+
+
+    }.flowOn(Dispatchers.IO)
 
     suspend fun searchForMovies(query: String):List<Movie>{
         var movies:List<Movie> = emptyList()
@@ -33,18 +55,15 @@ class ImdbRepo {
     }
 
 
-    suspend fun getTop250Movies():List<Movie>{
-        var moviesList:List<Movie> = emptyList()
+     fun getTop250Movies():LiveData<List<Movie>>{
+            return liveData(Dispatchers.IO) {
+                    val response = imdbApi.getTop250movies()
+                    if (response.isSuccessful){
+                        response.body()?.movies?.let { emit(it) }
+                    }else{
+                        Log.e(TAG , "the error is ${response.errorBody()}")
+                    }
+                }
 
-        val response = imdbApi.getTop250movies().awaitResponse()
-
-        if (response.isSuccessful){
-            moviesList = response.body()?.movies ?: emptyList()
-
-        }else{
-            Log.e(TAG , "the error is ${response.errorBody()}")
-        }
-
-        return moviesList
     }
 }

@@ -13,6 +13,7 @@ import com.tuwaiq.mixapp.R
 import com.tuwaiq.mixapp.databinding.MovieFragmentBinding
 import com.tuwaiq.mixapp.databinding.MovieListItemBinding
 import com.tuwaiq.mixapp.imdb.models.Movie
+import kotlinx.coroutines.flow.collect
 
 class MovieFragment : Fragment() {
 
@@ -55,11 +56,9 @@ class MovieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        movieViewModel.getMovies().observe(
-            this, Observer { movies ->
-                binding.movieRv.adapter = MoviesAdapter(movies)
-            }
-        )
+
+
+
     }
 
     override fun onCreateView(
@@ -70,6 +69,17 @@ class MovieFragment : Fragment() {
        binding = MovieFragmentBinding.inflate(layoutInflater)
        binding.movieRv.layoutManager = LinearLayoutManager(context)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        movieViewModel.dataLiveData.observe(
+            viewLifecycleOwner,
+            Observer {
+                binding.movieRv.adapter = MoviesAdapter(it)
+            }
+        )
     }
 
     private inner class MoviesHolder(val binding: MovieListItemBinding)
@@ -87,6 +97,7 @@ class MovieFragment : Fragment() {
                 binding.posterIv.load(movie.img_url)
             }
         }
+
 
     private inner class MoviesAdapter(val movies:List<Movie>):
             RecyclerView.Adapter<MoviesHolder>() {

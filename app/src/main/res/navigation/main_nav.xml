@@ -6,11 +6,6 @@
     app:startDestination="@id/navigation_movies">
 
     <fragment
-        android:id="@+id/navigation_room"
-        android:name="com.tuwaiq.mixapp.ui.room.RoomFragment"
-        android:label="room_fragment"
-        tools:layout="@layout/room_fragment" />
-    <fragment
         android:id="@+id/navigation_movies"
         android:name="com.tuwaiq.mixapp.ui.moive.MovieFragment"
         android:label="movie_fragment"
@@ -20,4 +15,28 @@
         android:name="com.tuwaiq.mixapp.ui.anyapi.AnyOtherApiFragment"
         android:label="any_other_api_fragment"
         tools:layout="@layout/any_other_api_fragment" />
+
+        <fragment
+            android:id="@+id/navigation_room"
+            android:name="com.tuwaiq.mixapp.ui.room.RoomFragment"
+            android:label="room_fragment"
+            tools:layout="@layout/room_fragment" >
+            <action
+                android:id="@+id/action_navigation_room_to_roomDetailsFragment"
+                app:destination="@id/roomDetailsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/roomDetailsFragment"
+            android:name="com.tuwaiq.mixapp.ui.room.details.RoomDetailsFragment"
+            android:label="room_details_fragment"
+            tools:layout="@layout/room_details_fragment" >
+            <action
+                android:id="@+id/action_roomDetailsFragment_to_navigation_room"
+                app:destination="@id/navigation_room" />
+            <argument
+                android:name="id"
+                app:argType="integer"
+                android:defaultValue="-1" />
+        </fragment>
+
 </navigation>
