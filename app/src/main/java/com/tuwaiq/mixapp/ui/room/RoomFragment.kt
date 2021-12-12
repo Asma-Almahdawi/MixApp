@@ -2,6 +2,8 @@ package com.tuwaiq.mixapp.ui.room
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,9 @@ class RoomFragment : Fragment() {
     companion object {
         fun newInstance() = RoomFragment()
     }
+
+//    private lateinit var name: Name
+
 
     private lateinit var navController:NavController
 
@@ -55,14 +60,14 @@ class RoomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            while (true){
-                val name = Name()
-                name.name = "ahmed"
-                viewModel.addName(name)
-                delay(5000)
-            }
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            while (true){
+//                val name = Name()
+//                name.name = ""
+//                viewModel.addName(name)
+//                delay(5000)
+//            }
+//        }
 
 
         viewModel.namesLiveData.observe(viewLifecycleOwner){names ->
@@ -113,6 +118,8 @@ class RoomFragment : Fragment() {
         override fun getItemCount(): Int = names.size
 
     }
+
+
 
 
 

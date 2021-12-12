@@ -11,14 +11,12 @@
         android:id="@+id/details_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autofillHints="name"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="240dp"
         android:ems="10"
+        android:hint="name"
         android:inputType="textPersonName"
-        android:labelFor="@id/details_name_tv"
         android:minHeight="48dp"
-        android:text="@string/name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,11 +24,12 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="372dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.365"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/details_name_tv"
-        app:layout_constraintVertical_bias="0.354" />
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

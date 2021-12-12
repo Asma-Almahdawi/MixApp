@@ -1,7 +1,9 @@
 package com.tuwaiq.mixapp.database
 
 import androidx.room.*
+import androidx.room.Insert
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface NamesDao {
